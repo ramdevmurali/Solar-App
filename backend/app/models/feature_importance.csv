@@ -1,0 +1,13 @@
+,importance
+hour,0.44057798
+temperature_2m (°C),0.1275177
+month,0.11524428
+day_of_year,0.08079027
+weather_code (wmo code),0.0675658
+year,0.037544977
+cloud_cover_high (%),0.033437837
+cloud_cover_mid (%),0.02558179
+cloud_cover_low (%),0.020296598
+day_of_week,0.020249818
+wind_speed_10m (km/h),0.016849494
+precipitation (mm),0.014343536
