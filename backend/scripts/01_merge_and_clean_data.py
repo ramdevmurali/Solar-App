@@ -3,11 +3,11 @@ import os
 
 print("--- Starting Data Merging and Cleaning Script ---")
 
-# --- 1. DEFINE FILE PATHS ---
-# This makes the script reusable and easy to understand.
-# It assumes you are running the script from the `solar-forecast-app/backend/` directory.
-RAW_DATA_PATH = '../data/raw/'
-PROCESSED_DATA_PATH = '../data/processed/'
+# --- ABSOLUTE PATHS BASED ON SCRIPT LOCATION ---
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+RAW_DATA_PATH = os.path.join(PROJECT_ROOT, 'data', 'raw')
+PROCESSED_DATA_PATH = os.path.join(PROJECT_ROOT, 'data', 'processed')
 SOLAR_FILES = [
     'PV Live Historical Results _23.csv', 
     'PV Live Historical Results _24.csv',
@@ -26,10 +26,9 @@ print("Step 2: Loading and combining solar generation data...")
 solar_df_list = []
 for file in SOLAR_FILES:
     try:
-        # Solar data has clean structure, no need to skip rows
         df = pd.read_csv(os.path.join(RAW_DATA_PATH, file))
+        print(f"{file} shape: {df.shape}")
         solar_df_list.append(df)
-        print(f"  - Successfully loaded {file}")
     except FileNotFoundError:
         print(f"  - ERROR: {file} not found in {RAW_DATA_PATH}. Skipping.")
         continue
@@ -97,6 +96,18 @@ print("\nStep 5: Merging solar and weather data...")
 merged_df = pd.merge(solar_df, weather_df, left_index=True, right_index=True, how='inner')
 
 print("  - Merging complete. Final dataset shape:", merged_df.shape)
+
+# --- RENAME COLUMNS TO MATCH API/FRONTEND ---
+rename_map = {
+    'temperature_2m (°C)': 'temperature_2m',
+    'precipitation (mm)': 'precipitation',
+    'cloud_cover_low (%)': 'cloudcover_low',
+    'cloud_cover_mid (%)': 'cloudcover_mid',
+    'cloud_cover_high (%)': 'cloudcover_high',
+    'wind_speed_10m (km/h)': 'wind_speed_10m',
+    'weather_code (wmo code)': 'weather_code',
+}
+merged_df.rename(columns=rename_map, inplace=True)
 
 
 # --- 6. HANDLE MISSING VALUES ---

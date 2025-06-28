@@ -24,11 +24,9 @@ except FileNotFoundError:
 # This MUST be the same list of features the model was trained on.
 # Order matters!
 FEATURES = [
-    'temperature_2m', 'relativehumidity_2m', 'apparent_temperature',
-    'precipitation', 'cloudcover', 'cloudcover_low', 'cloudcover_mid',
-    'cloudcover_high', 'shortwave_radiation', 'direct_radiation',
-    'diffuse_radiation', 'direct_normal_irradiance',
-    'hour', 'day_of_week', 'month', 'year'
+    'temperature_2m', 'precipitation', 'weather_code',
+    'cloudcover_low', 'cloudcover_mid', 'cloudcover_high',
+    'wind_speed_10m', 'hour', 'day_of_week', 'month', 'year'
 ]
 
 
@@ -46,6 +44,8 @@ def predict():
     json_data = request.get_json()
     if not json_data:
         return jsonify({"error": "No input data provided"}), 400
+
+    print("Received JSON data:", json_data)
 
     try:
         # --- 3. PREPARE THE DATA FOR THE MODEL ---
@@ -82,5 +82,5 @@ def predict():
         return jsonify({"predicted_solar_generation_mw": final_prediction})
 
     except (KeyError, TypeError) as e:
-        # This will catch errors if the JSON is missing a field or has the wrong format
+        print(f"Invalid input data: {e}")
         return jsonify({"error": f"Invalid input data: {e}"}), 400

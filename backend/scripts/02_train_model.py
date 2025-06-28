@@ -49,10 +49,9 @@ TARGET = 'solar_generation_mw'
 # The features are all the columns we'll use to make the prediction.
 # Updated to match the actual column names from the processed data
 FEATURES = [
-    'temperature_2m (°C)', 'precipitation (mm)', 'weather_code (wmo code)',
-    'cloud_cover_low (%)', 'cloud_cover_mid (%)', 'cloud_cover_high (%)',
-    'wind_speed_10m (km/h)',
-    'hour', 'day_of_week', 'month', 'year', 'day_of_year'
+    'temperature_2m', 'precipitation', 'weather_code',
+    'cloudcover_low', 'cloudcover_mid', 'cloudcover_high',
+    'wind_speed_10m', 'hour', 'day_of_week', 'month', 'year'
 ]
 
 # Ensure all feature columns exist in the DataFrame
