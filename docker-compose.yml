@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./backend/app/models:/app/app/models
+    networks:
+      - solar-net
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    networks:
+      - solar-net
+networks:
+  solar-net:
+    driver: bridge 
