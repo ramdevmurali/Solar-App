@@ -37,7 +37,8 @@ function App() {
 
   // Handles the form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the page from reloading
+    e.preventDefault();
+    console.log("Submitting form");
     setIsLoading(true);
     setError('');
     setPrediction(null);
