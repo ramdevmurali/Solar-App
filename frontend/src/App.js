@@ -14,7 +14,7 @@ const initialFormData = {
 };
 
 // This is the URL of your running Flask API
-const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5001/api/predict';
+const API_URL = 'https://solar-app-ve71.onrender.com/api/predict';
 
 function App() {
   // State to hold the form data
