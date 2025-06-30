@@ -6,14 +6,20 @@ services:
       - "5001:5001"
     volumes:
       - ./backend/app/models:/app/app/models
+    environment:
+      - FLASK_ENV=production
     networks:
       - solar-net
+    restart: unless-stopped
   frontend:
     build: ./frontend
     ports:
       - "3000:80"
+    depends_on:
+      - backend
     networks:
       - solar-net
+    restart: unless-stopped
 networks:
   solar-net:
     driver: bridge 

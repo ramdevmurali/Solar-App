@@ -14,7 +14,9 @@ const initialFormData = {
 };
 
 // This is the URL of your running Flask API
-const API_URL = 'http://127.0.0.1:5001/api/predict';
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? '/api/predict'  // Use relative path in production
+  : 'http://127.0.0.1:5001/api/predict';  // Use localhost in development
 
 function App() {
   // State to hold the form data
